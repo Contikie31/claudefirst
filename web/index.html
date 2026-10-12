@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Deals">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<title>Acquisitions Tracker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="top-row">
+    <h1>Acquisitions Tracker</h1>
+    <div class="top-actions">
+      <button id="refresh" class="btn" hidden>Refresh now</button>
+      <button id="export" class="btn">CSV</button>
+    </div>
+  </div>
+  <p id="updated" class="muted">Loading…</p>
+  <div class="search-row">
+    <input id="q" type="search" placeholder="Search company, sector, keyword…" autocomplete="off">
+    <button id="toggle-filters" class="btn" aria-expanded="false" aria-controls="filters">Filters</button>
+  </div>
+  <div id="quick" class="chips" role="group" aria-label="Quick filters">
+    <button data-quick="all" class="chip">All</button>
+    <button data-quick="Technology" class="chip">Tech</button>
+    <button data-quick="Digital & Media" class="chip">Digital</button>
+    <button data-quick="Private Equity" class="chip">Private equity</button>
+  </div>
+</header>
+
+<section id="filters" class="filters" hidden>
+  <fieldset><legend>Sector</legend><div id="f-sector" class="checks"></div></fieldset>
+  <fieldset><legend>Deal type</legend><div id="f-type" class="checks"></div></fieldset>
+  <fieldset><legend>Status</legend><div id="f-status" class="checks"></div></fieldset>
+  <fieldset><legend>Region</legend><div id="f-region" class="checks"></div></fieldset>
+  <div class="grid">
+    <label>Period
+      <select id="f-days">
+        <option value="1">Last 24 hours</option>
+        <option value="3">Last 3 days</option>
+        <option value="7" selected>Last 7 days</option>
+        <option value="30">Last 30 days</option>
+        <option value="90">Last 90 days</option>
+        <option value="0">All stored</option>
+      </select>
+    </label>
+    <label>Min. value (USD)
+      <select id="f-min">
+        <option value="0">Any</option>
+        <option value="-1">Disclosed only</option>
+        <option value="10">$10M+</option>
+        <option value="100">$100M+</option>
+        <option value="1000">$1B+</option>
+        <option value="10000">$10B+</option>
+      </select>
+    </label>
+    <label>Source
+      <select id="f-kind">
+        <option value="">News + SEC filings</option>
+        <option value="news">News only</option>
+        <option value="sec">SEC filings only</option>
+      </select>
+    </label>
+    <label>Sort
+      <select id="f-sort">
+        <option value="date">Newest first</option>
+        <option value="value">Largest value</option>
+        <option value="sources">Most reported</option>
+      </select>
+    </label>
+  </div>
+  <label class="inline"><input type="checkbox" id="f-parties"> Only items with acquirer and target identified</label>
+  <button id="reset" class="btn btn-ghost">Reset filters</button>
+</section>
+
+<section class="stats" id="stats"></section>
+<main id="list" class="list" aria-live="polite"></main>
+<button id="more" class="btn more" hidden>Show more</button>
+<footer class="muted foot">
+  Data: public news RSS (Google News, TechCrunch, GlobeNewswire, PR Newswire) and SEC EDGAR filings.
+  Classification is automatic and keyword-based; check the source link before relying on a record.
+  Values are converted to USD at fixed approximate rates.
+</footer>
+<script src="app.js"></script>
+</body>
+</html>
